@@ -182,8 +182,8 @@ on boot
     write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
 
-    # this order is very important for sensors
-    # input3 4 5 6 correspond to acc mag mag_raw ori
+    # This order is very important for sensors
+# input3 4 5 6 correspond to acc mag mag_raw ori
     chmod 755 /system/bin/geomagneticd
     chown system input /sys/class/input/input3/enable
     chown system input /sys/class/input/input3/delay
@@ -196,7 +196,8 @@ on boot
     chown system input /sys/class/input/input6/enable
     chown system input /sys/class/input/input6/delay
     chown system input /sys/class/input/input6/wake
-
+    chown system system /sys/bus/platform/devices/fastboot/fastboot
+    chown system system /sys/bus/platform/devices/fastboot/resume
     chown system system /sys/class/compass/akm8975/delay_acc
     chown system system /sys/class/compass/akm8975/delay_mag
     chown system system /sys/class/compass/akm8975/delay_ori
@@ -204,7 +205,6 @@ on boot
     chown system system /sys/class/compass/akm8975/enable_mag
     chown system system /sys/class/compass/akm8975/enable_ori
     chown system system /sys/class/compass/akm8975/accel
-
     chown input system /sys/bus/i2c/devices/1-0039/enable_als_sensor
     chown input system /sys/bus/i2c/devices/1-0039/enable_ps_sensor
     chown input system /sys/bus/i2c/devices/1-0039/ps_sensor_thld
@@ -213,10 +213,26 @@ on boot
     chmod 0664 /sys/bus/i2c/devices/1-0039/enable_ps_sensor
     chmod 0664 /sys/bus/i2c/devices/1-0039/ps_sensor_thld
     chmod 0664 /sys/bus/i2c/devices/1-0039/als_poll_delay
-
-    chown input system /sys/devices/i2c-1/1-000f/enable
+    chown input  system /sys/devices/i2c-1/1-000f/enable
     chmod 0664 /sys/devices/i2c-1/1-000f/enable
-    
+
+# Enabled service
+service akmd /system/bin/akmdfs -m2
+    class main
+    user compass
+    group compass misc input
+    disabled
+
+service orientationd /system/bin/orientationd
+     class main
+     user compass
+     group input
+
+service geomagneticd /system/bin/geomagneticd
+     class main
+     user compass
+     group system input
+
     # Enable writing to brightness node under flashlight from userspace
     chown system system /sys/class/leds/flashlight/brightness
     chmod 0666 /sys/class/leds/flashlight/brightness
@@ -228,7 +244,7 @@ on charger-fs
 
 on early-fs
     # mount mmc partitions
-    mount_all /fstab.d9
+    mount_all /fstab.i6
 
     setprop ro.crypto.fuse_sdcard true
 
@@ -409,6 +425,13 @@ service geomagneticd /system/bin/geomagneticd
 #   disabled
 #   oneshot
 
+service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
+    class late_start
+    user root
+    group system qcom_oncrpc
+    disabled
+    oneshot
+
 #service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
 #    class core
 #    user root
@@ -437,3 +460,12 @@ on property:persist.zram.size=256
 on property:persist.zram.size=512
     swapon_all fstab.zram_512
 
+
+on property:ro.hw_platform=msm8x25q_skud
+    start akmd
+
+on property:persist.sys.setbuildversion=1
+    start setbuildversion
+
+on property:persist.sys.setbuildversion=0
+    stop setbuildversion

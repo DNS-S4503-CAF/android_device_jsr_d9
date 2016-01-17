@@ -13,10 +13,10 @@ include $(BUILD_PREBUILT)
 # Init scripts
 
 include $(CLEAR_VARS)
-LOCAL_MODULE       := fstab.d9
+LOCAL_MODULE       := fstab.i6
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := fstab.d9
+LOCAL_SRC_FILES    := fstab.i6
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 

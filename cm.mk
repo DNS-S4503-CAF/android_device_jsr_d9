@@ -15,5 +15,5 @@
 #
 
 # Inherit device configuration
-$(call inherit-product, device/jsr/d9/cm_d9.mk)
+$(call inherit-product, device/jsr/i6/cm_i6.mk)
 

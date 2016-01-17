@@ -28,12 +28,12 @@ USE_CAMERA_STUB := true
 BOARD_VENDOR := jsr-qcom
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := d9,msm8625_d9,msm8225_d9,Boost
+TARGET_OTA_ASSERT_DEVICE := i6,msm8625_i6,msm8225_i6,s4503,DNS_S4503
 
 # Compile sys
-TARGET_GCC_VERSION_EXP := 4.8
+TARGET_GCC_VERSION_EXP := 4.9
 DISABLE_DEXPREOPT := true
-TARGET_SPECIFIC_HEADER_PATH := device/jsr/d9/include
+TARGET_SPECIFIC_HEADER_PATH := device/jsr/i6/include
 
 # Compiler flags
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a5 -mfpu=neon-vfpv4 -mfloat-abi=softfp
@@ -68,11 +68,11 @@ ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/jsr/msm8625
-TARGET_KERNEL_CONFIG := jsr_d9_defconfig
+TARGET_KERNEL_CONFIG := jsr_i6_defconfig
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100 
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x10000000 --ramdisk_offset 0x11000000 
 
 # Partitions
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 571859200
@@ -84,15 +84,15 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_USERIMAGES_USE_EXT4 := true
 
-BOARD_CACHE_DEVICE := /dev/block/mmcblk0p18
+BOARD_CACHE_DEVICE := /dev/block/mmcblk0p15
 BOARD_CACHE_FILESYSTEM := ext4
 BOARD_CACHE_FILESYSTEM_OPTIONS := rw
 
-BOARD_SYSTEM_DEVICE := /dev/block/mmcblk0p17
+BOARD_SYSTEM_DEVICE := /dev/block/mmcblk0p12
 BOARD_SYSTEM_FILESYSTEM := ext4
 BOARD_SYSTEM_FILESYSTEM_OPTIONS := rw
 
-BOARD_DATA_DEVICE := /dev/block/mmcblk0p21
+BOARD_DATA_DEVICE := /dev/block/mmcblk0p13
 BOARD_DATA_FILESYSTEM := ext4
 BOARD_DATA_FILESYSTEM_OPTIONS := rw
 
@@ -101,7 +101,7 @@ BOARD_WANTS_EMMC_BOOT := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_BATTERY_DEVICE_NAME := "battery"
 TARGET_INIT_VENDOR_LIB := libinit_msm
-TARGET_LIBINIT_DEFINES_FILE := device/jsr/d9/init/init_d9.c
+TARGET_LIBINIT_DEFINES_FILE := device/jsr/i6/init/init_i6.c
 
 # Dalvik
 TARGET_ARCH_LOWMEM := true
@@ -124,7 +124,7 @@ AUDIO_FEATURE_ENABLED_PROXY_DEVICE := false
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/jsr/d9/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/jsr/i6/bluetooth
 
 # FM
 BOARD_HAVE_QCOM_FM := true
@@ -144,7 +144,7 @@ COMMON_GLOBAL_CFLAGS += -DUSE_MDP3
 TARGET_USES_QCOM_BSP := true
 TARGET_GRALLOC_USES_ASHMEM := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
-BOARD_EGL_CFG := device/jsr/d9/configs/egl.cfg
+BOARD_EGL_CFG := device/jsr/i6/configs/egl.cfg
 TARGET_QCOM_DISPLAY_VARIANT := caf
 TARGET_NO_COMPAT_GRALLOC_PERFORM := true
 USE_OPENGL_RENDERER := true
@@ -160,10 +160,10 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # RIL
-BOARD_RIL_CLASS := ../../../device/jsr/d9/ril/
+BOARD_RIL_CLASS := ../../../device/jsr/i6/ril/
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/jsr/d9/cmhw
+BOARD_HARDWARE_CLASS := device/jsr/i6/cmhw
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -176,7 +176,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
 COMMON_GLOBAL_CFLAGS += -DLPA_DEFAULT_BUFFER_SIZE=480
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/jsr/d9/sepolicy
+BOARD_SEPOLICY_DIRS += device/jsr/i6/sepolicy
 
 BOARD_SEPOLICY_UNION += file_contexts
 BOARD_SEPOLICY_UNION += app.te
@@ -185,7 +185,7 @@ BOARD_SEPOLICY_UNION += file.te
 
 # USB
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
-BOARD_VOLD_MAX_PARTITIONS := 22
+BOARD_VOLD_MAX_PARTITIONS := 19
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
 TARGET_USE_CUSTOM_SECOND_LUN_NUM := 1
 
@@ -203,8 +203,8 @@ BOARD_RECOVERY_SWIPE := true
 BOARD_SUPPRESS_EMMC_WIPE := true
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 DEVICE_RESOLUTION := 540x960
-BOARD_CUSTOM_GRAPHICS := ../../../device/jsr/d9/recovery/graphics.c
-TARGET_RECOVERY_FSTAB := device/jsr/d9/recovery/recovery.fstab
+BOARD_CUSTOM_GRAPHICS := ../../../device/jsr/i6/recovery/graphics.c
+TARGET_RECOVERY_FSTAB := device/jsr/i6/recovery/recovery.fstab
 #BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/jsr/d9/recovery/recovery-keys.c
 BOARD_UMS_LUNFILE := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
 #TARGET_RECOVERY_INITRC := device/jsr/d9/recovery/init.rc
@@ -213,7 +213,7 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 # Wi-Fi
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER := NL80211
-TARGET_CUSTOM_WIFI := ../../device/jsr/d9/libhardware_legacy/wifi/wifi.c
+TARGET_CUSTOM_WIFI := ../../device/jsr/i6/libhardware_legacy/wifi/wifi.c
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_HAS_ATH_WLAN := true
 BOARD_WLAN_DEVICE := ath6kl
