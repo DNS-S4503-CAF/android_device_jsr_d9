@@ -235,7 +235,7 @@ service geomagneticd /system/bin/geomagneticd
 
     # Enable writing to brightness node under flashlight from userspace
     chown system system /sys/class/leds/flashlight/brightness
-    chmod 0666 /sys/class/leds/flashlight/brightness
+    chmod 0777 /sys/class/leds/flashlight/brightness
 
 on charger-fs
     setprop ro.charger.delay 3
