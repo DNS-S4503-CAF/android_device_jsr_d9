@@ -23,7 +23,7 @@
 USE_CAMERA_STUB := true
 
 # Inherit from the proprietary version
--include vendor/jsr/BoardConfigVendor.mk
+-include vendor/jsr/i6/BoardConfigVendor.mk
 
 BOARD_VENDOR := jsr-qcom
 
@@ -31,7 +31,7 @@ BOARD_VENDOR := jsr-qcom
 TARGET_OTA_ASSERT_DEVICE := i6,msm8625_i6,msm8225_i6,s4503,DNS_S4503
 
 # Compile sys
-TARGET_GCC_VERSION_EXP := 4.9
+TARGET_GCC_VERSION_EXP := 4.8
 DISABLE_DEXPREOPT := true
 TARGET_SPECIFIC_HEADER_PATH := device/jsr/i6/include
 
@@ -72,7 +72,7 @@ TARGET_KERNEL_CONFIG := jsr_i6_defconfig
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x10000000 --ramdisk_offset 0x11000000 
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100
 
 # Partitions
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 571859200
@@ -100,8 +100,8 @@ BOARD_DATA_FILESYSTEM_OPTIONS := rw
 BOARD_WANTS_EMMC_BOOT := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_BATTERY_DEVICE_NAME := "battery"
-TARGET_INIT_VENDOR_LIB := libinit_msm
-TARGET_LIBINIT_DEFINES_FILE := device/jsr/i6/init/init_i6.c
+#TARGET_INIT_VENDOR_LIB := libinit_msm
+#TARGET_LIBINIT_DEFINES_FILE := device/jsr/i6/init/init_i6.c
 
 # Dalvik
 TARGET_ARCH_LOWMEM := true

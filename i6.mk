@@ -179,5 +179,5 @@ PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanim
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
-$(call inherit-product, vendor/jsr/common-vendor.mk)
-$(call inherit-product, vendor/jsr/i6-vendor.mk)
+$(call inherit-product, vendor/jsr/i6/common-vendor.mk)
+$(call inherit-product, vendor/jsr/i6/i6-vendor.mk)
