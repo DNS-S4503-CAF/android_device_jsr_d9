@@ -15,7 +15,7 @@
 #
 
 # Release name
-PRODUCT_RELEASE_NAME := d9
+PRODUCT_RELEASE_NAME := i6
 
 # Correct boot animation size for the screen
 TARGET_SCREEN_HEIGHT := 960
@@ -31,13 +31,13 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from d9 device
-$(call inherit-product, device/jsr/d9/d9.mk)
+$(call inherit-product, device/jsr/i6/i6.mk)
 
 # Set those variables here to overwrite the inherited values.
-PRODUCT_NAME := cm_d9
-PRODUCT_DEVICE := d9
+PRODUCT_NAME := cm_i6
+PRODUCT_DEVICE := i6
 PRODUCT_BRAND := innos
 PRODUCT_MANUFACTURER := JSR
-PRODUCT_MODEL := D9
+PRODUCT_MODEL := I6
 
 PRODUCT_GMS_CLIENTID_BASE := android-google

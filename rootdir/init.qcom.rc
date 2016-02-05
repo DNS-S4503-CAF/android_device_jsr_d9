@@ -207,7 +207,11 @@ on boot
     
     # Enable writing to brightness node under flashlight from userspace
     chown system system /sys/class/leds/flashlight/brightness
-    chmod 0666 /sys/class/leds/flashlight/brightness
+    chmod 0777 /sys/class/leds/flashlight/brightness
+
+    # Enable writing to brightness node under flashlight-trigger from userspace
+    chown system system /sys/class/leds/flashlight/trigger
+    chmod 0666 /sys/class/leds/flashlight/trigger
 
 on fs
     # mount mmc partitions
@@ -264,16 +268,19 @@ on post-fs-data
 #   disabled
 #   oneshot
 
-#service ril-daemon1 /system/bin/rild -c 1
-#    class main
-#    socket rild1 stream 660 root radio
-#    socket rild-debug1 stream 660 radio system
-#    user root
-#    disabled
-#    group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc qcom_diag log
-
-#on property:ro.multi.rild=true
-#    start ril-daemon1
+service_redefine ril-daemon /system/bin/rild
+     class main
+     socket rild stream 660 root radio
+     socket rild-debug stream 660 radio system
+     user root
+     group radio cache inet misc audio log qcom_diag qcom_oncrpc
+ 
+service ril-daemon2 /system/bin/rild -c 1
+     class main
+     socket rild2 stream 660 root radio
+     socket rild-debug2 stream 660 radio system
+     user root
+     group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag log qcom_oncrpc
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
@@ -298,6 +305,7 @@ service rmt_oeminfo /system/bin/rmt_oeminfo
 
 service netmgrd /system/bin/netmgrd
     class main
+    group radio
 
 service oem_rpc_svc /system/bin/oem_rpc_svc
     class main

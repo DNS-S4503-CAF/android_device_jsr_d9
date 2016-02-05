@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/cm_d9.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/cm_i6.mk

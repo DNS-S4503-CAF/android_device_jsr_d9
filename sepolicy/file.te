@@ -1,1 +1,4 @@
 type persist_file, file_type;
+
+# Torch
+type torch_sysfs, fs_type, sysfs_type;

@@ -19,7 +19,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 # The GPS configuration appropriate for this device.
 #$(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/jsr/d9/overlay
+DEVICE_PACKAGE_OVERLAYS += device/jsr/i6/overlay
 
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
@@ -38,12 +38,12 @@ PRODUCT_PACKAGES += ueventd.qcom.rc
 PRODUCT_PACKAGES += init.qcom.ril.sh
 
 # Rootdir
-PRODUCT_PACKAGES += device/jsr/d9/rootdir/fstab.qcom:root/fstab.qcom
-PRODUCT_PACKAGES += device/jsr/d9/rootdir/init.qcom.rc:root/init.qcom.rc
-PRODUCT_PACKAGES += device/jsr/d9/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc
-PRODUCT_PACKAGES += device/jsr/d9/rootdir/init.target.rc:root/init.target.rc
-PRODUCT_PACKAGES += device/jsr/d9/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
-PRODUCT_PACKAGES += device/jsr/d9/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.qcom:root/fstab.qcom
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.rc:root/init.qcom.rc
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.target.rc:root/init.target.rc
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh
 
 # Torch
 PRODUCT_PACKAGES += Torch
@@ -99,36 +99,36 @@ PRODUCT_PACKAGES += wpa_supplicant.conf
 
 
 # Files
-PRODUCT_COPY_FILES += device/jsr/d9/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
-PRODUCT_COPY_FILES += device/jsr/d9/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
-PRODUCT_COPY_FILES += device/jsr/d9/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
-PRODUCT_COPY_FILES += device/jsr/d9/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
 PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml
 PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml
 PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml
 
-PRODUCT_COPY_FILES += device/jsr/d9/configs/audio_policy.conf:system/etc/audio_policy.conf
-PRODUCT_COPY_FILES += device/jsr/d9/configs/media_codecs.xml:system/etc/media_codecs.xml
-PRODUCT_COPY_FILES += device/jsr/d9/configs/media_profiles.xml:system/etc/media_profiles.xml
+PRODUCT_COPY_FILES += device/jsr/i6/configs/audio_policy.conf:system/etc/audio_policy.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/media_codecs.xml:system/etc/media_codecs.xml
+PRODUCT_COPY_FILES += device/jsr/i6/configs/media_profiles.xml:system/etc/media_profiles.xml
 
 # ETC
-PRODUCT_COPY_FILES += device/jsr/d9/configs/AudioFilter.csv:system/etc/AudioFilter.csv
-PRODUCT_COPY_FILES += device/jsr/d9/configs/init.qcom.fm.sh:system/etc/init.qcom.fm.sh
-PRODUCT_COPY_FILES += device/jsr/d9/configs/thermald.conf:system/etc/thermald.conf
-PRODUCT_COPY_FILES += device/jsr/d9/configs/gps.conf:system/etc/gps.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/AudioFilter.csv:system/etc/AudioFilter.csv
+PRODUCT_COPY_FILES += device/jsr/i6/configs/init.qcom.fm.sh:system/etc/init.qcom.fm.sh
+PRODUCT_COPY_FILES += device/jsr/i6/configs/thermald.conf:system/etc/thermald.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/gps.conf:system/etc/gps.conf
 
 # Keychars
-PRODUCT_COPY_FILES += device/jsr/d9/keychars/7x27a_kp.kcm:system/usr/keychars/7x27a_kp.kcm
+PRODUCT_COPY_FILES += device/jsr/i6/keychars/7x27a_kp.kcm:system/usr/keychars/7x27a_kp.kcm
 
 # Keylayout
-PRODUCT_COPY_FILES += device/jsr/d9/keylayout/7x27a_kp.kl:system/usr/keylayout/7x27a_kp.kl
-PRODUCT_COPY_FILES += device/jsr/d9/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl
-PRODUCT_COPY_FILES += device/jsr/d9/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl
-PRODUCT_COPY_FILES += device/jsr/d9/keylayout/ft5x06_ts.kl:system/usr/keylayout/ft5x06_ts.kl
-PRODUCT_COPY_FILES += device/jsr/d9/keylayout/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl
-#PRODUCT_COPY_FILES += device/jsr/d9/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl
-#PRODUCT_COPY_FILES += device/jsr/d9/keylayout/Generic.kl:system/usr/keylayout/Generic.kl
+PRODUCT_COPY_FILES += device/jsr/i6/keylayout/7x27a_kp.kl:system/usr/keylayout/7x27a_kp.kl
+PRODUCT_COPY_FILES += device/jsr/i6/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl
+PRODUCT_COPY_FILES += device/jsr/i6/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl
+PRODUCT_COPY_FILES += device/jsr/i6/keylayout/ft5x06_ts.kl:system/usr/keylayout/ft5x06_ts.kl
+PRODUCT_COPY_FILES += device/jsr/i6/keylayout/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl
+#PRODUCT_COPY_FILES += device/jsr/i6/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl
+#PRODUCT_COPY_FILES += device/jsr/i6/keylayout/Generic.kl:system/usr/keylayout/Generic.kl
 
 # Permissions
 PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml
@@ -149,11 +149,11 @@ PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.telephony.gsm.xm
 PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # Override bootanimation
-PRODUCT_COPY_FILES += device/jsr/d9/bootanimation/cm10.zip:system/media/bootanimation.zip
+PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
 
 #$(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
-$(call inherit-product, vendor/jsr/common-vendor.mk)
-$(call inherit-product, vendor/jsr/d9-vendor.mk)
+$(call inherit-product, vendor/jsr/i6/common-vendor.mk)
+$(call inherit-product, vendor/jsr/i6/i6-vendor.mk)

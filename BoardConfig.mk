@@ -20,7 +20,7 @@
 # The proprietary variant sets USE_CAMERA_STUB := false, this way
 # we use the camera stub when the vendor tree isn't present, and
 # the true camera library when the vendor tree is available.
-USE_CAMERA_STUB := true
+USE_CAMERA_STUB := false
 
 # Inherit from the proprietary version
 -include vendor/jsr/BoardConfigVendor.mk
@@ -28,7 +28,7 @@ USE_CAMERA_STUB := true
 BOARD_VENDOR := jsr-qcom
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := d9,msm8625_d9,msm8225_d9,Boost
+TARGET_OTA_ASSERT_DEVICE := s4503
 
 # Compile sys
 #TARGET_GCC_VERSION_EXP := 4.8
@@ -68,8 +68,8 @@ ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/jsr/msm8625
-TARGET_KERNEL_CONFIG := jsr_d9_defconfig
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel hack_lcd=1 pmemlog=3 reboot=2
+TARGET_KERNEL_CONFIG := jsr_i6_1_defconfig
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel batt_cap=1,4300,3200 hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2 pmemlog=3 reboot=2
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100 
@@ -84,15 +84,15 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_USERIMAGES_USE_EXT4 := true
 
-BOARD_CACHE_DEVICE := /dev/block/mmcblk0p18
+BOARD_CACHE_DEVICE := /dev/block/mmcblk0p15
 BOARD_CACHE_FILESYSTEM := ext4
 BOARD_CACHE_FILESYSTEM_OPTIONS := rw
 
-BOARD_SYSTEM_DEVICE := /dev/block/mmcblk0p17
+BOARD_SYSTEM_DEVICE := /dev/block/mmcblk0p12
 BOARD_SYSTEM_FILESYSTEM := ext4
 BOARD_SYSTEM_FILESYSTEM_OPTIONS := rw
 
-BOARD_DATA_DEVICE := /dev/block/mmcblk0p21
+BOARD_DATA_DEVICE := /dev/block/mmcblk0p13
 BOARD_DATA_FILESYSTEM := ext4
 BOARD_DATA_FILESYSTEM_OPTIONS := rw
 
@@ -119,7 +119,7 @@ AUDIO_FEATURE_ENABLED_PROXY_DEVICE := false
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/jsr/d9/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/jsr/i6/bluetooth
 
 # GPS
 QCOM_GPS_PATH := hardware/qcom/gps
@@ -135,7 +135,7 @@ COMMON_GLOBAL_CFLAGS += -DUSE_MDP3
 TARGET_USES_QCOM_BSP := true
 TARGET_GRALLOC_USES_ASHMEM := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
-BOARD_EGL_CFG := device/jsr/d9/configs/egl.cfg
+BOARD_EGL_CFG := device/jsr/i6/configs/egl.cfg
 TARGET_NO_COMPAT_GRALLOC_PERFORM := true
 USE_OPENGL_RENDERER := true
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
@@ -151,11 +151,13 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 BOARD_WANTS_EMMC_BOOT := true
 
 # RIL
-TARGET_RIL_VARIANT := caf
-#BOARD_RIL_CLASS := ../../../device/jsr/d9/ril/
+TARGET_RIL_VARIANT := legacy
+COMMON_GLOBAL_CFLAGS += -DRIL_SUPPORTS_SEEK
+COMMON_GLOBAL_CFLAGS += -DRIL_VARIANT_LEGACY
+BOARD_RIL_CLASS := ../../../device/jsr/i6/ril/
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/jsr/d9/cmhw
+BOARD_HARDWARE_CLASS := device/jsr/i6/cmhw
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -167,7 +169,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
 COMMON_GLOBAL_CFLAGS += -DLPA_DEFAULT_BUFFER_SIZE=480
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/jsr/d9/sepolicy
+BOARD_SEPOLICY_DIRS += device/jsr/i6/sepolicy
 
 # USB
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
@@ -181,14 +183,14 @@ BOARD_RECOVERY_SWIPE := true
 BOARD_SUPPRESS_EMMC_WIPE := true
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 DEVICE_RESOLUTION := 540x960
-BOARD_CUSTOM_GRAPHICS := ../../../device/jsr/d9/recovery/graphics.c
-TARGET_RECOVERY_FSTAB := device/jsr/d9/recovery/recovery.fstab
+BOARD_CUSTOM_GRAPHICS := ../../../device/jsr/i6/recovery/graphics.c
+TARGET_RECOVERY_FSTAB := device/jsr/i6/recovery/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 
 # Wi-Fi
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER := NL80211
-TARGET_CUSTOM_WIFI := ../../device/jsr/d9/libhardware_legacy/wifi/wifi.c
+TARGET_CUSTOM_WIFI := ../../device/jsr/i6/libhardware_legacy/wifi/wifi.c
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_HAS_ATH_WLAN := true
 BOARD_WLAN_DEVICE := ath6kl
