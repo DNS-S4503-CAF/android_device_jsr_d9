@@ -1,3 +1,0 @@
-# Torch
-allow system_app torch_sysfs:file { write open getattr };
-allow system_app torch_sysfs:dir { search };
