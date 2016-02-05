@@ -26,20 +26,11 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
-# Custom APK
-PRODUCT_PACKAGES += JSR_Settings
-
 # ViewMem 
 PRODUCT_PACKAGES += viewmem
 
 # Ramdisk
-PRODUCT_PACKAGES += fstab.i6
-PRODUCT_PACKAGES += fstab.emmc
-PRODUCT_PACKAGES += fstab.extsd
-PRODUCT_PACKAGES += fstab.zram_64
-PRODUCT_PACKAGES += fstab.zram_128
-PRODUCT_PACKAGES += fstab.zram_256
-PRODUCT_PACKAGES += fstab.zram_512
+PRODUCT_PACKAGES += fstab.qcom
 PRODUCT_PACKAGES += init.qcom.rc
 PRODUCT_PACKAGES += init.qcom.usb.rc
 PRODUCT_PACKAGES += init.target.rc
@@ -47,28 +38,12 @@ PRODUCT_PACKAGES += ueventd.qcom.rc
 PRODUCT_PACKAGES += init.qcom.ril.sh
 
 # Rootdir
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.s9:root/fstab.i6
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.emmc:root/fstab.emmc
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.extsd:root/fstab.extsd
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.zram_64:root/fstab.zram_64
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.zram_128:root/fstab.zram_128
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.zram_256:root/fstab.zram_256
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.zram_512:root/fstab.zram_512
+PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.qcom:root/fstab.qcom
 PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.rc:root/init.qcom.rc
 PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc
 PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.target.rc:root/init.target.rc
 PRODUCT_PACKAGES += device/jsr/i6/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
 PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh
-
-# Charger
-PRODUCT_PACKAGES += charger
-PRODUCT_PACKAGES += charger_res_images
-
-# FM
-PRODUCT_PACKAGES += FM2
-PRODUCT_PACKAGES += FMRecord
-PRODUCT_PACKAGES += libqcomfm_jni
-PRODUCT_PACKAGES += qcom.fmradio
 
 # Torch
 PRODUCT_PACKAGES += Torch
@@ -109,10 +84,13 @@ PRODUCT_PACKAGES += hwmac
 PRODUCT_PACKAGES += make_ext4fs
 PRODUCT_PACKAGES += setup_fs
 
+PRODUCT_PACKAGES += libstlport
+
 # WebKit
 #PRODUCT_PACKAGES += libwebcore
 
 # wifi
+PRODUCT_PACKAGES += libcnefeatureconfig
 PRODUCT_PACKAGES += libwpa_client
 PRODUCT_PACKAGES += hostapd
 PRODUCT_PACKAGES += dhcpcd.conf
@@ -121,16 +99,14 @@ PRODUCT_PACKAGES += wpa_supplicant.conf
 
 
 # Files
-PRODUCT_COPY_FILES += device/jsr/i6/configs/qosmgr_rules.xml:system/etc/qosmgr_rules.xml
-
 PRODUCT_COPY_FILES += device/jsr/i6/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
-#PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml
-#PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml
-#PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml
+PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml
+PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml
+PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml
 
 PRODUCT_COPY_FILES += device/jsr/i6/configs/audio_policy.conf:system/etc/audio_policy.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/media_codecs.xml:system/etc/media_codecs.xml
@@ -169,8 +145,8 @@ PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.wifi.xml:syste
 PRODUCT_COPY_FILES += frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 PRODUCT_COPY_FILES += frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 #PRODUCT_COPY_FILES += packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
-#PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
-#PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
+PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # Override bootanimation
 PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip

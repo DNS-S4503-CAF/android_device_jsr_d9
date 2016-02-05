@@ -16,6 +16,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-#ifneq ($(filter d9 msm8625_d9,$(TARGET_DEVICE)),)
+
 include $(call all-makefiles-under,$(LOCAL_PATH))
-#endif
+

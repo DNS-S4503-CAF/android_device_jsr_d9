@@ -26,31 +26,37 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+import init.target.rc
 import init.qcom.usb.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 644 /proc/cmdline
-
-    write /sys/block/mmcblk0/queue/read_ahead_kb 512
-    write /sys/block/mmcblk1/queue/read_ahead_kb 512
-
     write /sys/block/mmcblk0/queue/scheduler noop
-
-    # Use lz4 compression for ZRAM
-    write /sys/block/zram0/comp_algorithm lz4
 
 on init
     mkdir /persist 0771 system system
 
-    mkdir /storage 0775 system sdcard_r
-    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    mkdir /storage/sdcard1 0000 system system
-    mkdir /storage/sdcard0 0000 system system
+    # Use SDCard as primary storage
+    setprop ro.vold.primary_physical 1
 
-    export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk
-    export EXTERNAL_STORAGE /storage/sdcard0
+    #mkdir /storage 0775 system sdcard_r
+    #mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+    #mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    #mkdir /storage/sdcard1 0000 system system
+    #mkdir /storage/sdcard0 0000 system system
+
+    #export SECONDARY_STORAGE /storage/sdcard1
+    #export EXTERNAL_STORAGE /storage/sdcard0
+
+    #symlink /storage/sdcard1 /mnt/sdcard
+    #symlink /storage/sdcard1 /sdcard
+    #symlink /storage/sdcard0 /mnt/internal_sd
+    #symlink /storage/sdcard0 /internal_sd
+    
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard
 
 on boot
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
@@ -151,29 +157,11 @@ on boot
     write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 80
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 320000
 
-    # Read only 1 page at a time
-    write /proc/sys/vm/page-cluster 0
-
-    #write /proc/sys/vm/min_free_kbytes 4096
-    #write /proc/sys/vm/extra_free_kbytes 4096
-
-    # Adaptive LMK
-    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
-    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059
-    #write /sys/module/lowmemorykiller/parameters/adj 0,1,2,4,9,12
-
-    # Flash storage isn't a good entropy source, and only causes locking
-    # overhead in the kernel. Turn it off.
-    write /sys/block/mmcblk0/queue/add_random 0
-    write /sys/block/mmcblk1/queue/add_random 0
-
-    # Enable KSM
-    write /sys/kernel/mm/ksm/run 1
-    write /sys/kernel/mm/ksm/deferred_timer 1
-    write /sys/kernel/mm/ksm/sleep_millisecs 1500
-    write /sys/kernel/mm/ksm/pages_to_scan 256
-
     write /sys/devices/platform/msm_sdcc.1/idle_timeout 10
+    write /sys/module/lowmemorykiller/parameters/adj 0,1,2,4,9,12
+    write /proc/sys/vm/min_free_kbytes 4096
+    write /proc/sys/vm/extra_free_kbytes 4096
+    write /proc/sys/vm/page-cluster 0
 
     write /sys/module/pm2/modes/cpu0/standalone_power_collapse/idle_enabled 1
     write /sys/module/pm2/modes/cpu1/standalone_power_collapse/idle_enabled 1
@@ -182,8 +170,8 @@ on boot
     write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
 
-    # This order is very important for sensors
-# input3 4 5 6 correspond to acc mag mag_raw ori
+    # this order is very important for sensors
+    # input3 4 5 6 correspond to acc mag mag_raw ori
     chmod 755 /system/bin/geomagneticd
     chown system input /sys/class/input/input3/enable
     chown system input /sys/class/input/input3/delay
@@ -196,8 +184,7 @@ on boot
     chown system input /sys/class/input/input6/enable
     chown system input /sys/class/input/input6/delay
     chown system input /sys/class/input/input6/wake
-    chown system system /sys/bus/platform/devices/fastboot/fastboot
-    chown system system /sys/bus/platform/devices/fastboot/resume
+
     chown system system /sys/class/compass/akm8975/delay_acc
     chown system system /sys/class/compass/akm8975/delay_mag
     chown system system /sys/class/compass/akm8975/delay_ori
@@ -205,6 +192,7 @@ on boot
     chown system system /sys/class/compass/akm8975/enable_mag
     chown system system /sys/class/compass/akm8975/enable_ori
     chown system system /sys/class/compass/akm8975/accel
+
     chown input system /sys/bus/i2c/devices/1-0039/enable_als_sensor
     chown input system /sys/bus/i2c/devices/1-0039/enable_ps_sensor
     chown input system /sys/bus/i2c/devices/1-0039/ps_sensor_thld
@@ -213,40 +201,22 @@ on boot
     chmod 0664 /sys/bus/i2c/devices/1-0039/enable_ps_sensor
     chmod 0664 /sys/bus/i2c/devices/1-0039/ps_sensor_thld
     chmod 0664 /sys/bus/i2c/devices/1-0039/als_poll_delay
-    chown input  system /sys/devices/i2c-1/1-000f/enable
+
+    chown input system /sys/devices/i2c-1/1-000f/enable
     chmod 0664 /sys/devices/i2c-1/1-000f/enable
-
-# Enabled service
-service akmd /system/bin/akmdfs -m2
-    class main
-    user compass
-    group compass misc input
-    disabled
-
-service orientationd /system/bin/orientationd
-     class main
-     user compass
-     group input
-
-service geomagneticd /system/bin/geomagneticd
-     class main
-     user compass
-     group system input
-
+    
     # Enable writing to brightness node under flashlight from userspace
     chown system system /sys/class/leds/flashlight/brightness
     chmod 0777 /sys/class/leds/flashlight/brightness
 
-on charger-fs
-    setprop ro.charger.delay 3
-    setprop ro.charger.power_key_code 107
-    setprop ro.charger.ust 2
+    # Enable writing to brightness node under flashlight-trigger from userspace
+    chown system system /sys/class/leds/flashlight/trigger
+    chmod 0666 /sys/class/leds/flashlight/trigger
 
-on early-fs
+on fs
     # mount mmc partitions
-    mount_all /fstab.i6
-
-    setprop ro.crypto.fuse_sdcard true
+    mount_all /fstab.qcom
+    swapon_all /fstab.qcom
 
 # msm specific files that need to be created on /data
 on post-fs-data
@@ -298,16 +268,19 @@ on post-fs-data
 #   disabled
 #   oneshot
 
-service ril-daemon1 /system/bin/rild -c 1
-    class main
-    socket rild1 stream 660 root radio
-    socket rild-debug1 stream 660 radio system
-    user root
-    disabled
-    group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc qcom_diag log
-
-on property:ro.multi.rild=true
-    start ril-daemon1
+service_redefine ril-daemon /system/bin/rild
+     class main
+     socket rild stream 660 root radio
+     socket rild-debug stream 660 radio system
+     user root
+     group radio cache inet misc audio log qcom_diag qcom_oncrpc
+ 
+service ril-daemon2 /system/bin/rild -c 1
+     class main
+     socket rild2 stream 660 root radio
+     socket rild-debug2 stream 660 radio system
+     user root
+     group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag log qcom_oncrpc
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
@@ -332,6 +305,7 @@ service rmt_oeminfo /system/bin/rmt_oeminfo
 
 service netmgrd /system/bin/netmgrd
     class main
+    group radio
 
 service oem_rpc_svc /system/bin/oem_rpc_svc
     class main
@@ -371,18 +345,6 @@ service iprenew_p2p /system/bin/dhcpcd -n p2p
     class main
     disabled
     oneshot
-
-service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
-    class late_start
-    disabled
-
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-    class late_start
-    disabled
-
-service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk /storage/usbdisk
-    class late_start
-    disabled
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
@@ -425,13 +387,6 @@ service geomagneticd /system/bin/geomagneticd
 #   disabled
 #   oneshot
 
-service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
-    class late_start
-    user root
-    group system qcom_oncrpc
-    disabled
-    oneshot
-
 #service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
 #    class core
 #    user root
@@ -442,30 +397,5 @@ service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
 #    user root
 #    oneshot
 
-service charger /charger
-    class charger
-
 on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/scheduler deadline
-
-on property:persist.zram.size=64
-    swapon_all fstab.zram_64
-
-on property:persist.zram.size=128
-    swapon_all fstab.zram_128
-
-on property:persist.zram.size=256
-    swapon_all fstab.zram_256
-
-on property:persist.zram.size=512
-    swapon_all fstab.zram_512
-
-
-on property:ro.hw_platform=msm8x25q_skud
-    start akmd
-
-on property:persist.sys.setbuildversion=1
-    start setbuildversion
-
-on property:persist.sys.setbuildversion=0
-    stop setbuildversion
