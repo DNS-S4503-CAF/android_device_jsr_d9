@@ -67,9 +67,9 @@ ARCH_ARM_HIGH_OPTIMIZATION := true
 ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Kernel
-TARGET_KERNEL_SOURCE := kernel/jsr/msm8625
+TARGET_KERNEL_SOURCE := kernel/jsr/msm8625_r2
 TARGET_KERNEL_CONFIG := jsr_i6_1_defconfig
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel batt_cap=1,4300,3200 hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2 pmemlog=3 reboot=2
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel batt_cap=0,4300,3200 hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2 pmemlog=3 reboot=2
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100 

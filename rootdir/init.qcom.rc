@@ -170,6 +170,12 @@ on boot
     write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
 
+     # Enable KSM
+    write /sys/kernel/mm/ksm/run 1
+    write /sys/kernel/mm/ksm/deferred_timer 1
+    write /sys/kernel/mm/ksm/sleep_millisecs 1500
+    write /sys/kernel/mm/ksm/pages_to_scan 256
+
     # this order is very important for sensors
     # input3 4 5 6 correspond to acc mag mag_raw ori
     chmod 755 /system/bin/geomagneticd
