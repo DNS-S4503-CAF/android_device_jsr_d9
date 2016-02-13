@@ -120,6 +120,10 @@ PRODUCT_COPY_FILES += device/jsr/i6/configs/gps.conf:system/etc/gps.conf
 
 # Keychars
 PRODUCT_COPY_FILES += device/jsr/i6/keychars/7x27a_kp.kcm:system/usr/keychars/7x27a_kp.kcm
+PRODUCT_COPY_FILES += device/jsr/i6/keychars/ft5306_ts.kcm:system/usr/keychars/ft5306_ts.kcm
+
+# IDC
+PRODUCT_COPY_FILES += device/jsr/i6/idc/ft5306_ts.idc:system/usr/idc/ft5306_ts.idc
 
 # Keylayout
 PRODUCT_COPY_FILES += device/jsr/i6/keylayout/7x27a_kp.kl:system/usr/keylayout/7x27a_kp.kl
@@ -127,6 +131,7 @@ PRODUCT_COPY_FILES += device/jsr/i6/keylayout/7k_handset.kl:system/usr/keylayout
 PRODUCT_COPY_FILES += device/jsr/i6/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl
 PRODUCT_COPY_FILES += device/jsr/i6/keylayout/ft5x06_ts.kl:system/usr/keylayout/ft5x06_ts.kl
 PRODUCT_COPY_FILES += device/jsr/i6/keylayout/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl
+PRODUCT_COPY_FILES += device/jsr/i6/keylayout/ft5306_ts.kl:system/usr/keylayout/ft5306_ts.kl
 #PRODUCT_COPY_FILES += device/jsr/i6/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl
 #PRODUCT_COPY_FILES += device/jsr/i6/keylayout/Generic.kl:system/usr/keylayout/Generic.kl
 
