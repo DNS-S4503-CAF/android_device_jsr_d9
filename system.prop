@@ -75,7 +75,6 @@ ro.qualcomm.bluetooth.ftp=true
 ro.cwm.enable_key_repeat=true
 
 # Display
-debug.egl.recordable.rgba8888=1
 debug.composition.type=dyn
 debug.hwc.dynThreshold=1.9
 persist.hwc.mdpcomp.enable=false
@@ -138,7 +137,7 @@ ro.sys.fw.bg_apps_limit=16
 
 # Dalvik VM
 dalvik.vm.heapgrowthlimit=48m
-dalvik.vm.heaptargetutilization=0.25
+dalvik.vm.heapsize=128m
 ro.config.low_ram=true
 
 # Use ART small mode
