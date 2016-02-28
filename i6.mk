@@ -74,6 +74,7 @@ PRODUCT_PACKAGES += libstagefrighthw
 
 PRODUCT_PACKAGES += gps.msm7x27a
 PRODUCT_PACKAGES += camera.msm7x27a 
+PRODUCT_PACKAGES += Snap
 PRODUCT_PACKAGES += lights.msm7x27a
 
 PRODUCT_PACKAGES += power.msm7x27a
@@ -85,9 +86,6 @@ PRODUCT_PACKAGES += make_ext4fs
 PRODUCT_PACKAGES += setup_fs
 
 PRODUCT_PACKAGES += libstlport
-
-# WebKit
-#PRODUCT_PACKAGES += libwebcore
 
 # wifi
 PRODUCT_PACKAGES += libcnefeatureconfig
@@ -154,7 +152,7 @@ PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.telephony.gsm.xm
 PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # Override bootanimation
-PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
+# PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
 
 #$(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 

@@ -67,13 +67,13 @@ ARCH_ARM_HIGH_OPTIMIZATION := true
 ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Kernel
-TARGET_KERNEL_SOURCE := kernel/jsr/msm8625_r2
-TARGET_KERNEL_CONFIG := jsr_i6_1_defconfig
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel batt_cap=2,4300,2800,3000 hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2 pmemlog=3 reboot=2
+TARGET_KERNEL_SOURCE := kernel/jsr2
+TARGET_KERNEL_CONFIG := jsr_i6_new_defconfig
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel batt_cap=1,4300,3200 hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2 pmemlog=3 reboot=2
 BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := ~/arm-linux-gnueabi-linaro_4.7.4-2014.06/bin/arm-eabi-
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100 
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01500000
 
 # Partitions
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 571859200
@@ -105,6 +105,7 @@ BOARD_CHARGER_SHOW_PERCENTAGE := true
 
 # Low RAM settings
 MALLOC_IMPL := dlmalloc
+TARGET_BOOTANIMATION_HALF_RES := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := false
 AUDIO_FEATURE_ENABLED_INCALL_MUSIC := false
 AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := false
@@ -245,10 +246,10 @@ DONT_DEXPREOPT_PREBUILTS := true
 BLOCK_BASED_OTA := false
  
 # Include an expanded selection of fonts
-#EXTENDED_FONT_FOOTPRINT := true
+EXTENDED_FONT_FOOTPRINT := true
 
 # Enable Minikin text layout engine (will be the default soon)
-#USE_MINIKIN := true
+USE_MINIKIN := true
 
 # BUILD FLAGS
 #TARGET_USE_O3 := true
