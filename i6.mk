@@ -74,7 +74,7 @@ PRODUCT_PACKAGES += libstagefrighthw
 
 PRODUCT_PACKAGES += gps.msm7x27a
 PRODUCT_PACKAGES += camera.msm7x27a 
-PRODUCT_PACKAGES += Snap
+PRODUCT_PACKAGES += Camera2
 PRODUCT_PACKAGES += lights.msm7x27a
 
 PRODUCT_PACKAGES += power.msm7x27a
@@ -95,7 +95,6 @@ PRODUCT_PACKAGES += dhcpcd.conf
 PRODUCT_PACKAGES += wpa_supplicant
 PRODUCT_PACKAGES += wpa_supplicant.conf
 
-
 # Files
 PRODUCT_COPY_FILES += device/jsr/i6/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
@@ -109,6 +108,7 @@ PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_googl
 PRODUCT_COPY_FILES += device/jsr/i6/configs/audio_policy.conf:system/etc/audio_policy.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/media_codecs.xml:system/etc/media_codecs.xml
 PRODUCT_COPY_FILES += device/jsr/i6/configs/media_profiles.xml:system/etc/media_profiles.xml
+PRODUCT_COPY_FILES += device/jsr/i6/configs/01disabled_google_system_update:system/etc/init.d/01disabled_google_system_update
 
 # ETC
 PRODUCT_COPY_FILES += device/jsr/i6/configs/AudioFilter.csv:system/etc/AudioFilter.csv
@@ -152,7 +152,7 @@ PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.telephony.gsm.xm
 PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # Override bootanimation
-# PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
+PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
 
 #$(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 

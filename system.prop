@@ -95,7 +95,6 @@ ro.vold.umsdirtyratio=30
 
 # WiFi Atheros 600x
 wifi.interface=eth0
-wifi.supplicant_scan_interval=60
 ro.confg.hw_appfsversion=d9V4_4_SYSIMG
 ro.confg.hw_appsbootversion=d9V4_4_APPSBOOT
 ro.confg.hw_appversion=d9V4_4_KERNEL
@@ -124,33 +123,16 @@ mm.enable.smoothstreaming=true
 # Newer camera API isn't supported.
 camera2.portability.force_api=1
 
-# Low RAM
-ro.config.low_ram=true
-config.disable_atlas=true
-persist.sys.force_highendgfx=true
-ro.config.max_starting_bg=8
-ro.sys.fw.bg_apps_limit=16
-
-# Strict mode
-persist.sys.strictmode.visual=0 
-persist.sys.strictmode.disable=1
-
-# Dalvik VM
-dalvik.vm.heapgrowthlimit=52m
-dalvik.vm.heaptargetutilization=0.25
-ro.config.low_ram=true
-
 # Use ART small mode
 dalvik.vm.dex2oat-filter=balanced
 dalvik.vm.dex2oat-flags=--no-watch-dog
 dalvik.vm.image-dex2oat-filter=speed
 dalvik.vm.dex2oat-swap=false
-
-# ART properties
-dalvik.vm.dex2oat-Xms=8m 
-dalvik.vm.dex2oat-Xmx=96m 
-dalvik.vm.image-dex2oat-Xms=48m 
+dalvik.vm.dex2oat-Xms=8m
+dalvik.vm.dex2oat-Xmx=96m
+dalvik.vm.image-dex2oat-Xms=48m
 dalvik.vm.image-dex2oat-Xmx=48m
+ro.ksm.default=1
 
 # Root
 persist.sys.root_access=3

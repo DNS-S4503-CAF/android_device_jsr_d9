@@ -67,16 +67,17 @@ ARCH_ARM_HIGH_OPTIMIZATION := true
 ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Kernel
-TARGET_KERNEL_SOURCE := kernel/jsr2
-TARGET_KERNEL_CONFIG := jsr_i6_new_defconfig
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive user_debug=31 debug ignore_loglevel batt_cap=1,4300,3200 hack_lcd=1 chg_hack_lcd=0 pmemlog=3 reboot=2 pmemlog=3 reboot=2
+TARGET_KERNEL_SOURCE := kernel/jsr3
+TARGET_KERNEL_CONFIG := 3_defconfig
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive hack_lcd=1 chg_hack_lcd=0
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := ~/arm-linux-gnueabi-linaro_4.7.4-2014.06/bin/arm-eabi-
+#KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-gnueabi-linaro_4.7.4-2014.06/bin/arm-eabi-
+KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.9/bin/arm-eabi-
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01500000
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100 
 
 # Partitions
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 571859200
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 996147200
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 984961024
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 13901824
 BOARD_CACHEIMAGE_PARTITION_SIZE := 104857600
@@ -159,7 +160,7 @@ COMMON_GLOBAL_CFLAGS += -DRIL_VARIANT_LEGACY
 BOARD_RIL_CLASS := ../../../device/jsr/i6/ril/
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/jsr/i6/cmhw
+#BOARD_HARDWARE_CLASS := device/jsr/i6/cmhw
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
