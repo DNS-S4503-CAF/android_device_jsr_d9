@@ -29,21 +29,11 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # ViewMem 
 PRODUCT_PACKAGES += viewmem
 
-# Ramdisk
-PRODUCT_PACKAGES += fstab.qcom
-PRODUCT_PACKAGES += init.qcom.rc
-PRODUCT_PACKAGES += init.qcom.usb.rc
-PRODUCT_PACKAGES += init.target.rc
-PRODUCT_PACKAGES += ueventd.qcom.rc
-PRODUCT_PACKAGES += init.qcom.ril.sh
-
 # Rootdir
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/fstab.qcom:root/fstab.qcom
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.rc:root/init.qcom.rc
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.target.rc:root/init.target.rc
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
-PRODUCT_PACKAGES += device/jsr/i6/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,device/jsr/i6/rootdir,root)
+
+# Copy Prebuilt Camera as system app
+PRODUCT_COPY_FILES +=  device/jsr/i6/prebuilt/app/com.cyngn.cameranext.ver.2.0.003.apk:system/priv-app/Camera/com.cyngn.cameranext.ver.2.0.003.apk
 
 # Torch
 PRODUCT_PACKAGES += Torch
@@ -60,7 +50,6 @@ PRODUCT_PACKAGES += copybit.msm7x27a
 PRODUCT_PACKAGES += gralloc.msm7x27a
 PRODUCT_PACKAGES += libqdMetaData
 PRODUCT_PACKAGES += memtrack.msm7x27a
-PRODUCT_PACKAGES += hwcomposer.msm7x27a
 PRODUCT_PACKAGES += libtilerenderer
 
 PRODUCT_PACKAGES += librs_jni
@@ -68,13 +57,14 @@ PRODUCT_PACKAGES += LiveWallpapers
 PRODUCT_PACKAGES += LiveWallpapersPicker
 PRODUCT_PACKAGES += VisualizationWallpapers
 
+PRODUCT_PACKAGES += charger_res_images
+PRODUCT_PACKAGES += charger
 PRODUCT_PACKAGES += libmm-omxcore
 PRODUCT_PACKAGES += libOmxCore
 PRODUCT_PACKAGES += libstagefrighthw
 
 PRODUCT_PACKAGES += gps.msm7x27a
 PRODUCT_PACKAGES += camera.msm7x27a 
-PRODUCT_PACKAGES += Camera2
 PRODUCT_PACKAGES += lights.msm7x27a
 
 PRODUCT_PACKAGES += power.msm7x27a
@@ -87,7 +77,10 @@ PRODUCT_PACKAGES += setup_fs
 
 PRODUCT_PACKAGES += libstlport
 
-# wifi
+# Gello
+#PRODUCT_PACKAGES += Gello
+
+# Wifi
 PRODUCT_PACKAGES += libcnefeatureconfig
 PRODUCT_PACKAGES += libwpa_client
 PRODUCT_PACKAGES += hostapd
@@ -99,6 +92,7 @@ PRODUCT_PACKAGES += wpa_supplicant.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+PRODUCT_COPY_FILES += device/jsr/i6/configs/99googlelatinimefix:system/etc/init.d/99googlelatinimefix
 PRODUCT_COPY_FILES += device/jsr/i6/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
 PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml
@@ -108,7 +102,6 @@ PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_googl
 PRODUCT_COPY_FILES += device/jsr/i6/configs/audio_policy.conf:system/etc/audio_policy.conf
 PRODUCT_COPY_FILES += device/jsr/i6/configs/media_codecs.xml:system/etc/media_codecs.xml
 PRODUCT_COPY_FILES += device/jsr/i6/configs/media_profiles.xml:system/etc/media_profiles.xml
-PRODUCT_COPY_FILES += device/jsr/i6/configs/01disabled_google_system_update:system/etc/init.d/01disabled_google_system_update
 
 # ETC
 PRODUCT_COPY_FILES += device/jsr/i6/configs/AudioFilter.csv:system/etc/AudioFilter.csv
@@ -152,7 +145,7 @@ PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.telephony.gsm.xm
 PRODUCT_PACKAGES += frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # Override bootanimation
-PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
+# PRODUCT_COPY_FILES += device/jsr/i6/bootanimation/cm10.zip:system/media/bootanimation.zip
 
 #$(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 

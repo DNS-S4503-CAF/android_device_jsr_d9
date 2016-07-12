@@ -33,7 +33,7 @@ TARGET_OTA_ASSERT_DEVICE := s4503
 # Compile sys
 #TARGET_GCC_VERSION_EXP := 4.8
 DISABLE_DEXPREOPT := true
-#TARGET_SPECIFIC_HEADER_PATH := device/jsr/d9/include
+TARGET_SPECIFIC_HEADER_PATH := device/jsr/i6/include
 
 # Compiler flags
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a5 -mfpu=neon-vfpv4 -mfloat-abi=softfp
@@ -67,12 +67,12 @@ ARCH_ARM_HIGH_OPTIMIZATION := true
 ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Kernel
-TARGET_KERNEL_SOURCE := kernel/jsr3
-TARGET_KERNEL_CONFIG := 3_defconfig
+TARGET_KERNEL_SOURCE := kernel/jsr4
+TARGET_KERNEL_CONFIG := 4_defconfig
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive hack_lcd=1 chg_hack_lcd=0
 BOARD_KERNEL_PAGESIZE := 4096
-#KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-gnueabi-linaro_4.7.4-2014.06/bin/arm-eabi-
-KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.9/bin/arm-eabi-
+KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-gnueabi-linaro_4.7.4-2014.06/bin/arm-eabi-
+#KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.9/bin/arm-eabi-
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00208000 --ramdisk_offset 0x01500000 --tags_offset 0x00200100 
 
@@ -138,10 +138,10 @@ COMMON_GLOBAL_CFLAGS += -DUSE_MDP3
 TARGET_USES_QCOM_BSP := true
 TARGET_GRALLOC_USES_ASHMEM := true
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
-BOARD_EGL_CFG := device/jsr/i6/configs/egl.cfg
 TARGET_NO_COMPAT_GRALLOC_PERFORM := true
 USE_OPENGL_RENDERER := true
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
+TARGET_NO_ADAPTIVE_PLAYBACK := true
 
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
@@ -190,10 +190,39 @@ BOARD_CUSTOM_GRAPHICS := ../../../device/jsr/i6/recovery/graphics.c
 TARGET_RECOVERY_FSTAB := device/jsr/i6/recovery/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 
-# Wi-Fi
+# Wi-Fi-ath6kl CAF
+#BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+#BOARD_HOSTAPD_DRIVER := NL80211
+#WPA_SUPPLICANT_VERSION := VER_0_8_X
+#TARGET_CUSTOM_WIFI := ../../device/jsr/i6/libhardware_legacy/wifi/wifi.c
+#BOARD_HAS_ATH_WLAN := true
+#BOARD_WLAN_DEVICE := ath6kl
+#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+#WIFI_DRIVER_IFACE_NAME := "eth"
+#WIFI_PARAMS += WIFI_MAC_FROM_NV="true"
+
+#WIFI_PARAMS += WIFI_DRIVER_IFACE_NAME="$(WIFI_DRIVER_IFACE_NAME)"
+#WIFI_PARAMS += WIFI_DRIVER_MODULE_PATH="$(WIFI_DRIVER_MODULE_PATH)"
+#WIFI_PARAMS += WIFI_DRIVER_MODULE_NAME="$(WIFI_DRIVER_MODULE_NAME)"
+
+#WIFI_PARAMS += AR6003_MAC_FILE="softmac"
+#WIFI_PARAMS += AR6003_REV2_BOARD_POWER_PA_FILE="../../data/misc/wifi/Cal_powerTuned_pa.bin"
+#WIFI_PARAMS += AR6003_HW_FW_DIR="ath6k/AR6003/hw2.1.1"
+#WIFI_PARAMS += AR6003_HW_BOARD_DATA_FILE="ath6k/AR6003/hw2.1.1/caldata.bin"
+#WIFI_PARAMS += AR6003_HW_DEFAULT_BOARD_DATA_FILE="ath6k/AR6003/hw2.1.1/bdata.SD31.bin"
+#WIFI_DRIVER_FW_PATH_AP := "ap"
+#WIFI_DRIVER_FW_PATH_STA := "sta"
+#WIFI_DRIVER_FW_PATH_P2P := "p2p"
+#WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/ath6kl_sdio.ko"
+#WIFI_DRIVER_MODULE_NAME := "ath6kl_sdio"
+#WIFI_EXT_MODULE_PATH := "/system/lib/modules/cfg80211.ko"
+#WIFI_EXT_MODULE_NAME := "cfg80211"
+#WIFI_DRIVER_FW_PATH_PARAM := "/data/misc/wifi/fwpath"
+
+# Wi-Fi-ar6000 CAF
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER := NL80211
-TARGET_CUSTOM_WIFI := ../../device/jsr/i6/libhardware_legacy/wifi/wifi.c
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_HAS_ATH_WLAN := true
 BOARD_WLAN_DEVICE := ath6kl
@@ -218,6 +247,7 @@ WIFI_PARAMS += AR6003_REV2_BOARD_POWER_PA_FILE="../../data/misc/wifi/Cal_powerTu
 WIFI_PARAMS += AR6003_HW_FW_DIR="ath6k"
 WIFI_PARAMS += AR6003_HW_BOARD_DATA_FILE="load/caldata.bin"
 WIFI_PARAMS += AR6003_HW_DEFAULT_BOARD_DATA_FILE="ath6k/bdata.SD31.bin"
+WIFI_DRIVER_FW_PATH_PARAM := "/data/misc/wifi/fwpath"
 
 # These currently have to go to the ramdisk for wlan_detect to pick them up.
 # Hopefully they can join their friends at $(KERNEL_MODULES_OUT) soon. :(
@@ -236,7 +266,7 @@ TARGET_KERNEL_MODULES := KERNEL_EXTERNAL_MODULES
 ifeq ($(HOST_OS),linux)
   ifeq ($(TARGET_BUILD_VARIANT),userdebug)
     ifeq ($(WITH_DEXPREOPT),)
-#      WITH_DEXPREOPT := true
+      WITH_DEXPREOPT := true
     endif
   endif
 endif

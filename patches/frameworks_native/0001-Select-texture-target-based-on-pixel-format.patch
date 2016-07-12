@@ -1,4 +1,4 @@
-From 49e937b9a994580536aa475a37a4c49bd5bf371e Mon Sep 17 00:00:00 2001
+From 339468caae52b0aa0ce802e89e2da35cd077a642 Mon Sep 17 00:00:00 2001
 From: Kyle Harrison <khwebmail@gmail.com>
 Date: Fri, 13 Feb 2015 20:16:18 +0000
 Subject: [PATCH] Select texture target based on pixel format
@@ -12,6 +12,8 @@ select between GL_EXTERNAL_TEXTURE_OES, and GL_TEXTURE_2D based
 on the pixel format.
 
 This change is done to reduce the composition time for 8x55
+
+Change-Id: I6675eec6802caa0f862dd551608e4cc92a6b61bb
 ---
  include/gui/GLConsumer.h                           |  6 ++++
  libs/gui/Android.mk                                |  4 +++
@@ -41,26 +43,26 @@ index c35c7be..3a63a0e 100644
      // EGLSlot contains the information and object references that
      // GLConsumer maintains about a BufferQueue buffer slot.
 diff --git a/libs/gui/Android.mk b/libs/gui/Android.mk
-index 76aec6e..4d03def 100644
+index 76aec6e..40d77ac 100644
 --- a/libs/gui/Android.mk
 +++ b/libs/gui/Android.mk
-@@ -91,6 +91,10 @@ ifeq ($(TARGET_BOARD_PLATFORM), tegra3)
- 	LOCAL_CFLAGS += -DDONT_USE_FENCE_SYNC
+@@ -95,6 +95,10 @@ ifeq ($(TARGET_NO_SENSOR_PERMISSION_CHECK),true)
+ LOCAL_CPPFLAGS += -DNO_SENSOR_PERMISSION_CHECK
  endif
  
 +ifeq ($(BOARD_ADRENO_DECIDE_TEXTURE_TARGET),true)
 +	LOCAL_CFLAGS += -DDECIDE_TEXTURE_TARGET
 +endif
 +
- ifeq ($(TARGET_NO_SENSOR_PERMISSION_CHECK),true)
- LOCAL_CPPFLAGS += -DNO_SENSOR_PERMISSION_CHECK
- endif
+ include $(BUILD_SHARED_LIBRARY)
+ 
+ ifeq (,$(ONE_SHOT_MAKEFILE))
 diff --git a/services/surfaceflinger/Android.mk b/services/surfaceflinger/Android.mk
-index c2b74ed..64f866e 100644
+index 6a90083..a1d9b65 100644
 --- a/services/surfaceflinger/Android.mk
 +++ b/services/surfaceflinger/Android.mk
-@@ -90,6 +90,10 @@ else
-     LOCAL_CFLAGS += -DMAX_VIRTUAL_DISPLAY_DIMENSION=0
+@@ -99,6 +99,10 @@ ifeq ($(BOARD_USE_BGRA_8888),true)
+     LOCAL_CFLAGS += -DUSE_BGRA_8888
  endif
  
 +ifeq ($(BOARD_ADRENO_DECIDE_TEXTURE_TARGET),true)
@@ -109,7 +111,7 @@ index 853a4eb..7295b6c 100644
  
  void GLES11RenderEngine::setupLayerBlackedOut() {
 diff --git a/services/surfaceflinger/SurfaceFlingerConsumer.cpp b/services/surfaceflinger/SurfaceFlingerConsumer.cpp
-index ed1f31b..006f83b 100644
+index ed1f31b..4b976e0 100644
 --- a/services/surfaceflinger/SurfaceFlingerConsumer.cpp
 +++ b/services/surfaceflinger/SurfaceFlingerConsumer.cpp
 @@ -27,13 +27,24 @@
@@ -141,7 +143,7 @@ index ed1f31b..006f83b 100644
          return BUFFER_REJECTED;
      }
  
-+#ifdef DECIDE_TEXTURE_TARGET
++    #ifdef DECIDE_TEXTURE_TARGET
 +    // GPU is not efficient in handling GL_TEXTURE_EXTERNAL_OES
 +    // texture target. Depending on the image format, decide,
 +    // the texture target to be used
@@ -195,5 +197,5 @@ index 779e5b7..6394aae 100644
      // See GLConsumer::bindTextureImageLocked().
      status_t bindTextureImage();
 -- 
-1.9.5.msysgit.0
+2.8.0
 
